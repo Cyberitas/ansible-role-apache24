@@ -1,0 +1,28 @@
+# roles/webserver/tasks/main.yml
+---
+- name: Install Apache
+  yum: name=httpd state=present
+
+- name: Install SSL module for Apache
+  yum: name=mod_ssl state=present
+  when: developement == true
+
+- name: /etc/httpd/conf.d/ssl.conf exist?
+  stat: 
+    path: /etc/httpd/conf.d/ssl.conf
+  register: sslconf_result
+
+- name: Move ssl.conf file away
+  command: /bin/mv -f /etc/httpd/conf.d/ssl.conf /etc/httpd/conf.d/ssl.not.this.one
+  when: developement == true and sslconf_result.stat.exists == True
+
+- name: Start Apache
+  service: name=httpd state=started enabled=yes
+
+- name: Install Apache default HTML script
+  copy: src=index.html dest=/var/www/html/index.html mode=0664
+
+- name: restart httpd
+  systemd:
+    name: httpd
+    state: restarted
