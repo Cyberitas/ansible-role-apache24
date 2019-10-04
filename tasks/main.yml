@@ -5,7 +5,7 @@
 
 - name: Install SSL module for Apache
   yum: name=mod_ssl state=present
-  when: developement == true
+  when: enable_devel_mode == true
 
 - name: /etc/httpd/conf.d/ssl.conf exist?
   stat: 
