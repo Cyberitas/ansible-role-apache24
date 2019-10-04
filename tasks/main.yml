@@ -14,7 +14,7 @@
 
 - name: Move ssl.conf file away
   command: /bin/mv -f /etc/httpd/conf.d/ssl.conf /etc/httpd/conf.d/ssl.not.this.one
-  when: developement == true and sslconf_result.stat.exists == True
+  when: enable_devel_mode == true and sslconf_result.stat.exists == True
 
 - name: Start Apache
   service: name=httpd state=started enabled=yes
