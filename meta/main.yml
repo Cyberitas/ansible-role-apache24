@@ -3,6 +3,7 @@ dependencies: []
 
 galaxy_info:
   author: James Dugger
+  role_name: apache24
   description: Apache 2.4 for Linux.
   company: Cyberitas Technologies, LLC
   license: "license (MIT)"
